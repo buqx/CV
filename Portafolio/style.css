@@ -1,90 +1,319 @@
-/* Estilos Generales */
+:root {
+    --bg: #f6f8fb;
+    --surface: #ffffff;
+    --ink: #1f2933;
+    --ink-soft: #52606d;
+    --brand: #0f4c81;
+    --brand-2: #f08a24;
+    --header-h: 72px;
+
+    --card-primary: #0f4c81;
+    --card-secondary: #1f7a8c;
+    --card-tertiary: #b6412f;
+
+    --shadow: 0 14px 30px rgba(15, 76, 129, 0.14);
+    --radius: 14px;
+    --transition: 240ms ease;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
 }
 
 body {
-    background-color: #f4f4f9;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background:
+        radial-gradient(circle at 12% 15%, rgba(240, 138, 36, 0.16), transparent 32%),
+        radial-gradient(circle at 85% 78%, rgba(15, 76, 129, 0.14), transparent 36%),
+        var(--bg);
+    color: var(--ink);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* --- HEADER CON FLEXBOX --- */
+.menu-toggle {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Header fijo en la parte superior */
 .navbar {
-    background-color: #2c3e50;
-    color: white;
-    padding: 1rem 2rem;
-    
-    display: flex; /* Activamos Flexbox */
-    justify-content: space-between; /* Alineación horizontal: extremos */
-    align-items: center; /* Alineación vertical: centro */
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: var(--header-h);
+    background: linear-gradient(110deg, var(--brand), #133e63);
+    color: #fff;
+    padding: 0 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    z-index: 20;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.logo {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+.menu-button {
+    display: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    user-select: none;
 }
 
 .nav-links {
     display: flex;
-    gap: 20px; /* Espacio entre enlaces */
+    gap: 1rem;
 }
 
-.nav-links a {
-    color: white;
+.nav-links a,
+.sidebar a {
     text-decoration: none;
+    color: inherit;
+    transition: color var(--transition), transform var(--transition);
 }
 
-/* --- HERO SECTION --- */
+.nav-links a:hover,
+.sidebar a:hover {
+    color: #ffd39c;
+    transform: translateY(-1px);
+}
+
+.nav-links a:focus-visible,
+.sidebar a:focus-visible,
+.card-actions button:focus-visible {
+    outline: 2px solid #ffd39c;
+    outline-offset: 3px;
+}
+
+.layout-shell {
+    margin-top: var(--header-h);
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: calc(100vh - var(--header-h));
+}
+
+/* Sidebar para desktop y colapsable en móvil */
+.sidebar {
+    position: sticky;
+    top: var(--header-h);
+    align-self: start;
+    height: calc(100vh - var(--header-h));
+    padding: 1.5rem 1rem;
+    background: #ffffffcc;
+    backdrop-filter: blur(4px);
+    border-right: 1px solid #d9e2ec;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    transition: transform var(--transition);
+}
+
+.sidebar h3 {
+    font-size: 1rem;
+    margin-bottom: 0.4rem;
+    color: var(--brand);
+}
+
+.sidebar a {
+    font-weight: 600;
+    color: #334e68;
+}
+
+.main-content {
+    padding: 1.4rem;
+    display: grid;
+    gap: 1.5rem;
+}
+
 .hero {
-    height: 60vh;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1200x600');
-    background-size: cover;
-    color: white;
-
+    min-height: 42vh;
+    border-radius: var(--radius);
+    color: #fff;
+    padding: 2rem;
     display: flex;
-    justify-content: center; /* Centrado horizontal */
-    align-items: center;    /* Centrado vertical */
-    text-align: center;
-}
-
-/* --- SECCIÓN DE HABILIDADES (FLEX WRAP) --- */
-.skills-section {
-    padding: 50px 20px;
-    text-align: center;
-}
-
-.skills-container {
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;       /* Permite que las tarjetas bajen si no caben */
-    justify-content: center; 
-    gap: 15px;
-}
-
-.skill-card {
-    background-color: #3498db;
-    color: white;
-    padding: 20px;
-    width: 150px;
-    border-radius: 8px;
-    font-weight: bold;
-    
-    /* Flexbox interno para centrar el texto de la tarjeta */
-    display: flex;
-    justify-content: center;
     align-items: center;
-    transition: transform 0.3s;
-}
-
-.skill-card:hover {
-    transform: translateY(-5px);
-    background-color: #2980b9;
-}
-
-/* --- FOOTER --- */
-.footer {
-    background-color: #2c3e50;
-    color: white;
-    padding: 20px;
-    margin-top: 40px;
-
-    display: flex;
     justify-content: center;
+    text-align: center;
+    background:
+        linear-gradient(115deg, rgba(15, 76, 129, 0.9), rgba(182, 65, 47, 0.72)),
+        url("https://images.unsplash.com/photo-1484417894907-623942c8ee29?auto=format&fit=crop&w=1200&q=80") center/cover;
+    box-shadow: var(--shadow);
+    animation: cardEnter 600ms ease both;
+}
+
+.hero-content h1 {
+    font-size: clamp(1.55rem, 2.8vw, 2.3rem);
+}
+
+.hero-content h2 {
+    margin-top: 0.55rem;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    font-weight: 500;
+}
+
+.hero-content p {
+    margin-top: 0.7rem;
+    color: #e7edf4;
+}
+
+.skills-section,
+.contact-section {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 1.4rem;
+}
+
+.skills-section h3,
+.contact-section h3 {
+    font-size: 1.35rem;
+    color: var(--brand);
+}
+
+/* Grid de tarjetas para contenido principal */
+.skills-grid {
+    margin-top: 1rem;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+/* Componente de tarjeta con variantes */
+.tech-card {
+    --card-accent: var(--card-primary);
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border-top: 4px solid var(--card-accent);
+    box-shadow: 0 10px 24px rgba(31, 41, 51, 0.1);
+    transition: transform var(--transition), box-shadow var(--transition);
+    animation: cardEnter 650ms ease both;
+}
+
+.card-secondary {
+    --card-accent: var(--card-secondary);
+}
+
+.card-tertiary {
+    --card-accent: var(--card-tertiary);
+}
+
+.tech-card img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    display: block;
+}
+
+.card-content {
+    padding: 1rem;
+}
+
+.card-content h4 {
+    color: var(--card-accent);
+    font-size: 1.1rem;
+}
+
+.card-content p {
+    margin-top: 0.6rem;
+    color: var(--ink-soft);
+    line-height: 1.45;
+    font-size: 0.95rem;
+}
+
+.card-actions {
+    margin-top: 0.9rem;
+    display: flex;
+    gap: 0.55rem;
+}
+
+.card-actions button {
+    border: none;
+    border-radius: 999px;
+    padding: 0.5rem 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: #fff;
+    background: var(--card-accent);
+    transition: transform var(--transition), filter var(--transition), opacity var(--transition);
+}
+
+.card-actions button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.08);
+}
+
+.card-actions button:active {
+    transform: translateY(1px) scale(0.99);
+    filter: brightness(0.94);
+}
+
+.tech-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 30px rgba(31, 41, 51, 0.16);
+}
+
+.contact-section p {
+    margin-top: 0.5rem;
+    color: var(--ink-soft);
+}
+
+/* Footer pegajoso */
+.footer {
+    background: #102a43;
+    color: #fff;
+    text-align: center;
+    padding: 0.95rem;
+}
+
+@keyframes cardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 920px) {
+    .layout-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-button {
+        display: inline-block;
+        color: #fff;
+    }
+
+    .nav-links {
+        display: none;
+    }
+
+    .sidebar {
+        position: fixed;
+        z-index: 18;
+        left: 0;
+        width: 250px;
+        transform: translateX(-100%);
+        box-shadow: 8px 0 24px rgba(0, 0, 0, 0.12);
+    }
+
+    #menu-toggle:checked ~ .layout-shell .sidebar {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        padding: 1rem;
+    }
 }

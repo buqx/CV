@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <input type="checkbox" id="menu-toggle" class="menu-toggle" aria-hidden="true">
 
     <header class="navbar">
         <div class="logo">JE</div>
+        <label for="menu-toggle" class="menu-button" aria-label="Abrir o cerrar menú">☰</label>
         <nav class="nav-links">
             <a href="#inicio">Inicio</a>
             <a href="#habilidades">Habilidades</a>
@@ -17,25 +19,71 @@
         </nav>
     </header>
 
-    <section id="inicio" class="hero">
-        <div class="hero-content">
-            <h1>Juan Esteban Valencia Idarraga</h1>
-            <h2>Tecnólogo en Análisis y Desarrollo de Software</h2>
-            <p>Desarrollo soluciones tecnológicas eficientes y escalables.</p>
-        </div>
-    </section>
+    <div class="layout-shell">
+        <aside class="sidebar">
+            <h3>Navegación</h3>
+            <a href="#inicio">Presentación</a>
+            <a href="#habilidades">Tecnologías</a>
+            <a href="#contacto">Contacto</a>
+        </aside>
 
-    <section id="habilidades" class="skills-section">
-        <h3>Mis Tecnologías</h3>
-        <div class="skills-container">
-            <div class="skill-card">PHP</div>
-            <div class="skill-card">Laravel</div>
-            <div class="skill-card">React</div>
-            <div class="skill-card">Inertia.js</div>
-            <div class="skill-card">MySQL</div>
-            <div class="skill-card">GitHub</div>
-        </div>
-    </section>
+        <main class="main-content">
+            <section id="inicio" class="hero">
+                <div class="hero-content">
+                    <h1>Juan Esteban Valencia Idarraga</h1>
+                    <h2>Tecnólogo en Análisis y Desarrollo de Software</h2>
+                    <p>Desarrollo soluciones tecnológicas eficientes y escalables para web moderna.</p>
+                </div>
+            </section>
+
+            <section id="habilidades" class="skills-section">
+                <h3>Mis Tecnologías</h3>
+                <div class="skills-grid">
+                    <article class="tech-card card-primary">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Desarrollo backend en PHP">
+                        <div class="card-content">
+                            <h4>PHP y Laravel</h4>
+                            <p>Construcción de APIs, autenticación y lógica de negocio escalable.</p>
+                            <div class="card-actions">
+                                <button type="button">Ver proyecto</button>
+                                <button type="button">Detalles</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="tech-card card-secondary">
+                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80" alt="Desarrollo frontend con React">
+                        <div class="card-content">
+                            <h4>React e Inertia.js</h4>
+                            <p>Interfaces reactivas, navegación fluida y experiencia de usuario consistente.</p>
+                            <div class="card-actions">
+                                <button type="button">Ver proyecto</button>
+                                <button type="button">Detalles</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="tech-card card-tertiary">
+                        <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=800&q=80" alt="Modelado y consultas en base de datos">
+                        <div class="card-content">
+                            <h4>MySQL y GitHub</h4>
+                            <p>Modelado de datos, optimización de consultas y control de versiones profesional.</p>
+                            <div class="card-actions">
+                                <button type="button">Ver proyecto</button>
+                                <button type="button">Detalles</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section id="contacto" class="contact-section">
+                <h3>Contacto</h3>
+                <p>Correo: juanesteban.dev@email.com</p>
+                <p>GitHub: github.com/juanesteban-dev</p>
+            </section>
+        </main>
+    </div>
 
     <footer class="footer">
         <p>&copy; 2026 - Taller de Programación Web 1</p>
