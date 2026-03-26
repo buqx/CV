@@ -1,0 +1,90 @@
+/* Estilos Generales */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background-color: #f4f4f9;
+}
+
+/* --- HEADER CON FLEXBOX --- */
+.navbar {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem 2rem;
+    
+    display: flex; /* Activamos Flexbox */
+    justify-content: space-between; /* Alineación horizontal: extremos */
+    align-items: center; /* Alineación vertical: centro */
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px; /* Espacio entre enlaces */
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    height: 60vh;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://via.placeholder.com/1200x600');
+    background-size: cover;
+    color: white;
+
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center;    /* Centrado vertical */
+    text-align: center;
+}
+
+/* --- SECCIÓN DE HABILIDADES (FLEX WRAP) --- */
+.skills-section {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.skills-container {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;       /* Permite que las tarjetas bajen si no caben */
+    justify-content: center; 
+    gap: 15px;
+}
+
+.skill-card {
+    background-color: #3498db;
+    color: white;
+    padding: 20px;
+    width: 150px;
+    border-radius: 8px;
+    font-weight: bold;
+    
+    /* Flexbox interno para centrar el texto de la tarjeta */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s;
+}
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    background-color: #2980b9;
+}
+
+/* --- FOOTER --- */
+.footer {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    margin-top: 40px;
+
+    display: flex;
+    justify-content: center;
+}
