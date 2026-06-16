@@ -1,0 +1,126 @@
+<nav class="navbar navbar-expand-lg sticky-top" role="navigation" aria-label="Navegación principal">
+  <div class="container">
+    <!-- Brand -->
+    <a class="navbar-brand" routerLink="/" aria-label="CineExplorer - Inicio" (click)="closeMobileMenu()">
+      <span class="navbar-brand__icon">🎬</span>
+      <span class="navbar-brand__text">CineExplorer</span>
+    </a>
+
+    <!-- Search Form (Desktop) -->
+    <form class="d-none d-lg-block search-form" (submit)="onSearchSubmit($event)">
+      <div class="input-group">
+        <input
+          type="search"
+          class="form-control"
+          placeholder="Buscar películas..."
+          [formControl]="searchControl"
+          aria-label="Buscar películas"
+        />
+        <button class="btn btn-outline-primary" type="submit" aria-label="Buscar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <!-- Mobile Toggle Button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      (click)="toggleMobileMenu()"
+      [attr.aria-expanded]="showMobileMenu"
+      aria-label="Alternar menú"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar Content (collapsible) -->
+    <div class="navbar-collapse" [class.show]="showMobileMenu">
+
+      <!-- Search Form (Mobile) -->
+      <form class="d-lg-none search-form-mobile mb-3" (submit)="onSearchSubmit($event)">
+        <div class="input-group">
+          <input
+            type="search"
+            class="form-control"
+            placeholder="Buscar películas..."
+            [formControl]="searchControl"
+            aria-label="Buscar películas"
+          />
+          <button class="btn btn-outline-primary" type="submit">Buscar</button>
+        </div>
+      </form>
+
+      <!-- Navigation Links -->
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+        <!-- Inicio Link -->
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}"
+            (click)="closeMobileMenu()"
+          >
+            Inicio
+          </a>
+        </li>
+
+        <!-- Genre Dropdown -->
+        <li class="nav-item dropdown">
+          <button
+            class="nav-link dropdown-toggle"
+            type="button"
+            (click)="toggleGenreDropdown()"
+            [attr.aria-expanded]="showGenreDropdown"
+            id="genreDropdown"
+            aria-haspopup="true"
+          >
+            Géneros
+          </button>
+          <ul class="dropdown-menu" [class.show]="showGenreDropdown" aria-labelledby="genreDropdown">
+            <!-- Genera un item por cada género obtenido de la API -->
+            <li *ngFor="let genre of genres">
+              <a class="dropdown-item" (click)="onGenreClick(genre.id)">
+                {{ genre.name }}
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Favoritos Link con contador -->
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="/favorites"
+            routerLinkActive="active"
+            (click)="closeMobileMenu()"
+          >
+            Favoritos
+            <!-- Contador de favoritos (reactivo via async pipe) -->
+            <ng-container *ngIf="favoritesService.cantidad$ | async as favoritesCount">
+              <span *ngIf="favoritesCount > 0" class="badge bg-danger">{{ favoritesCount }}</span>
+            </ng-container>
+          </a>
+        </li>
+
+        <!-- Theme Toggle Button -->
+        <li class="nav-item">
+          <button
+            class="btn theme-toggle"
+            (click)="toggleTheme()"
+            [attr.aria-label]="currentTheme === 'dark' ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
+            type="button"
+          >
+            <!-- Muestra sol si está en modo oscuro, luna si está en modo claro -->
+            <span *ngIf="currentTheme === 'light'">🌙</span>
+            <span *ngIf="currentTheme === 'dark'">☀️</span>
+          </button>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>

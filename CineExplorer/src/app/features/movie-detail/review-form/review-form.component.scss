@@ -1,0 +1,22 @@
+.card {
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border-color, #dee2e6);
+  border-radius: var(--border-radius-md, 12px);
+}
+
+.card-title {
+  color: var(--text-primary, #212121);
+}
+
+.invalid-feedback {
+  color: var(--danger-color, #dc3545);
+}
+
+.form-range {
+  background-color: var(--bg-tertiary, #e9ecef);
+}
+
+.form-check-input:checked {
+  background-color: var(--primary-color, #0d6efd);
+  border-color: var(--primary-color, #0d6efd);
+}

@@ -1,0 +1,105 @@
+<main class="home">
+  <!-- Hero/Featured Movie -->
+  <section *ngIf="featuredMovie" class="hero">
+    <div class="hero__backdrop">
+      <img
+        *ngIf="featuredMovie.backdrop_path"
+        [src]="featuredMovie.backdrop_path | tmdbImage:'original'"
+        [alt]="'Imagen de fondo de ' + featuredMovie.title"
+        class="hero__backdrop-image"
+      />
+      <div class="hero__overlay"></div>
+    </div>
+    <div class="hero__content container">
+      <div class="hero__info">
+        <h1 class="hero__title">{{ featuredMovie.title }}</h1>
+        <p class="hero__overview">{{ featuredMovie.overview | truncate:150 }}</p>
+        <a [routerLink]="['/movie', featuredMovie.id]" class="hero__button btn btn-primary">
+          Ver Detalles
+        </a>
+      </div>
+      <div class="hero__poster">
+        <img
+          *ngIf="featuredMovie.poster_path"
+          [src]="featuredMovie.poster_path | tmdbImage:'w500'"
+          [alt]="'Póster de ' + featuredMovie.title"
+          class="hero__poster-image"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="container py-5">
+    <div class="alert alert-danger" role="alert">
+      {{ error }}
+    </div>
+  </div>
+
+  <!-- Movies Sections -->
+  <div *ngIf="!loading && !error" class="container py-4">
+    <!-- Popular Movies -->
+    <section class="movies-section">
+      <header class="movies-section__header">
+        <h2 class="movies-section__title">Películas Populares</h2>
+        <button class="btn btn-sm btn-outline-secondary" (click)="reloadPopular()">
+          Actualizar
+        </button>
+      </header>
+      <div class="movies-grid">
+        <app-movie-card
+          *ngFor="let movie of popularMovies; let i = index"
+          [movie]="movie"
+          [isFavorite]="isFavorite(movie.id)"
+          [style.animation-delay]="(i * 50) + 'ms'"
+          (toggleFavorite)="onToggleFavorite($event)"
+        ></app-movie-card>
+      </div>
+    </section>
+
+    <!-- Top Rated Movies -->
+    <section class="movies-section">
+      <header class="movies-section__header">
+        <h2 class="movies-section__title">Mejor Valoradas</h2>
+        <button class="btn btn-sm btn-outline-secondary" (click)="reloadTopRated()">
+          Actualizar
+        </button>
+      </header>
+      <div class="movies-grid">
+        <app-movie-card
+          *ngFor="let movie of topRatedMovies; let i = index"
+          [movie]="movie"
+          [isFavorite]="isFavorite(movie.id)"
+          [style.animation-delay]="(i * 50) + 'ms'"
+          (toggleFavorite)="onToggleFavorite($event)"
+        ></app-movie-card>
+      </div>
+    </section>
+
+    <!-- Upcoming Movies -->
+    <section class="movies-section">
+      <header class="movies-section__header">
+        <h2 class="movies-section__title">Próximos Estrenos</h2>
+        <button class="btn btn-sm btn-outline-secondary" (click)="reloadUpcoming()">
+          Actualizar
+        </button>
+      </header>
+      <div class="movies-grid">
+        <app-movie-card
+          *ngFor="let movie of upcomingMovies; let i = index"
+          [movie]="movie"
+          [isFavorite]="isFavorite(movie.id)"
+          [style.animation-delay]="(i * 50) + 'ms'"
+          (toggleFavorite)="onToggleFavorite($event)"
+        ></app-movie-card>
+      </div>
+    </section>
+  </div>
+</main>

@@ -1,0 +1,40 @@
+<article class="movie-card">
+  <a [routerLink]="['/movie', movie.id]" class="movie-card__link">
+    <figure class="movie-card__image-wrapper">
+      <img
+        *ngIf="movie.poster_path"
+        [src]="movie.poster_path | tmdbImage:'w500'"
+        [alt]="'Póster de la película ' + movie.title"
+        class="movie-card__image"
+        loading="lazy"
+      />
+      <div *ngIf="!movie.poster_path" class="movie-card__placeholder">
+        <span class="movie-card__placeholder-icon">🎬</span>
+      </div>
+      <span class="movie-card__rating" aria-label="Puntuación: {{ movie.vote_average | number:'1.1-1' }}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        {{ movie.vote_average | number:'1.1-1' }}
+      </span>
+    </figure>
+    <div class="movie-card__content">
+      <h3 class="movie-card__title">{{ movie.title }}</h3>
+      <p class="movie-card__stars">{{ movie.vote_average | stars }}</p>
+      <time class="movie-card__year" [attr.datetime]="movie.release_date">
+        {{ movie.release_date ? (movie.release_date | date:'yyyy') : 'Sin fecha' }}
+      </time>
+    </div>
+  </a>
+  <button
+    class="movie-card__favorite"
+    [class.movie-card__favorite--active]="isFavorite"
+    (click)="onFavoriteClick($event)"
+    [attr.aria-label]="isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'"
+    type="button"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" [attr.fill]="isFavorite ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </svg>
+  </button>
+</article>

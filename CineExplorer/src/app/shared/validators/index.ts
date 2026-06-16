@@ -1,0 +1,1 @@
+export { noSoloEspacios } from './custom-validators';

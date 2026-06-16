@@ -1,0 +1,143 @@
+<main class="movie-detail">
+  <!-- Loading State -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="container py-5">
+    <div class="alert alert-danger" role="alert">
+      {{ error }}
+    </div>
+  </div>
+
+  <!-- Movie Content -->
+  <article *ngIf="!loading && !error && movie" class="movie-content">
+    <!-- Backdrop -->
+    <section class="movie-backdrop">
+      <div class="movie-backdrop__image-wrapper">
+        <img
+          *ngIf="movie.backdrop_path"
+          [src]="movie.backdrop_path | tmdbImage:'original'"
+          [alt]="'Imagen de fondo de ' + movie.title"
+          class="movie-backdrop__image"
+        />
+        <div class="movie-backdrop__overlay"></div>
+      </div>
+    </section>
+
+    <!-- Main Info -->
+    <section class="movie-info container">
+      <div class="movie-info__grid">
+        <!-- Poster -->
+        <div class="movie-info__poster">
+          <img
+            *ngIf="movie.poster_path"
+            [src]="movie.poster_path | tmdbImage:'w500'"
+            [alt]="'Póster de ' + movie.title"
+            class="movie-info__poster-image"
+          />
+          <div *ngIf="!movie.poster_path" class="movie-info__poster-placeholder">
+            🎬
+          </div>
+        </div>
+
+        <!-- Details -->
+        <div class="movie-info__details">
+          <header>
+            <h1 class="movie-info__title">{{ movie.title }}</h1>
+            <p *ngIf="movie.tagline" class="movie-info__tagline">{{ movie.tagline }}</p>
+          </header>
+
+          <div class="movie-info__meta">
+            <span class="movie-info__rating" aria-label="Puntuación: {{ movie.vote_average }}">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#f4c518">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+              {{ movie.vote_average | number:'1.1-1' }}/10
+            </span>
+            <span class="movie-info__runtime">{{ formatRuntime(movie.runtime) }}</span>
+            <time class="movie-info__date" [attr.datetime]="movie.release_date">
+              {{ formatDate(movie.release_date) }}
+            </time>
+            <span class="movie-info__language">{{ movie.original_language | uppercase }}</span>
+          </div>
+
+          <div class="movie-info__genres">
+            <span *ngFor="let genre of movie.genres" class="badge bg-primary">
+              {{ genre.name }}
+            </span>
+          </div>
+
+          <div class="movie-info__actions">
+            <button
+              class="btn btn-lg"
+              [class.btn-outline-danger]="isFavorite"
+              [class.btn-danger]="!isFavorite"
+              (click)="onToggleFavorite()"
+              type="button"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" [attr.fill]="isFavorite ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" class="me-2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+              {{ isFavorite ? 'Quitar de Favoritos' : 'Agregar a Favoritos' }}
+            </button>
+          </div>
+
+          <div class="movie-info__overview">
+            <h2>Sinopsis</h2>
+            <p>{{ movie.overview || 'No disponible.' }}</p>
+          </div>
+
+          <dl class="movie-info__credits" *ngIf="director">
+            <dt>Director</dt>
+            <dd>{{ director.name }}</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cast Section -->
+    <section *ngIf="topCast.length > 0" class="movie-cast container">
+      <h2 class="movie-cast__title">Reparto</h2>
+      <div class="movie-cast__grid">
+        <figure *ngFor="let actor of topCast" class="cast-member">
+          <div class="cast-member__image-wrapper">
+            <img
+              *ngIf="actor.profile_path"
+              [src]="actor.profile_path | tmdbImage:'w185'"
+              [alt]="'Foto de ' + actor.name"
+              class="cast-member__image"
+            />
+            <div *ngIf="!actor.profile_path" class="cast-member__placeholder">
+              👤
+            </div>
+          </div>
+          <figcaption class="cast-member__info">
+            <span class="cast-member__name">{{ actor.name }}</span>
+            <span class="cast-member__character">{{ actor.character }}</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Similar Movies -->
+    <section *ngIf="similarMovies.length > 0" class="movie-similar container">
+      <h2 class="movie-similar__title">Películas Similares</h2>
+      <div class="movie-similar__grid">
+        <app-movie-card
+          *ngFor="let movie of similarMovies"
+          [movie]="movie"
+          (toggleFavorite)="onSimilarMovieClick($event)"
+        ></app-movie-card>
+      </div>
+    </section>
+
+    <!-- Review Form -->
+    <section class="mt-5 mb-4">
+      <app-review-form />
+    </section>
+  </article>
+</main>

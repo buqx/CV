@@ -1,0 +1,19 @@
+<!-- Spinner Component -->
+<!-- Muestra un indicador de carga con mensaje opcional -->
+
+<div class="spinner-container" [class.spinner-container--fullscreen]="fullScreen">
+  <!-- Spinner usando CSS de Bootstrap -->
+  <div
+    class="spinner-border"
+    [ngClass]="[getSizeClass(), getColorClass()]"
+    role="status"
+    aria-label="Cargando"
+  >
+    <span class="visually-hidden">Cargando...</span>
+  </div>
+
+  <!-- Mensaje de carga (opcional) -->
+  <p *ngIf="message" class="spinner-message">
+    {{ message }}
+  </p>
+</div>

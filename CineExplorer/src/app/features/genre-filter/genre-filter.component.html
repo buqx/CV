@@ -1,0 +1,75 @@
+<main class="genre-filter">
+  <div class="container py-4">
+    <header class="genre-filter__header">
+      <h1 class="genre-filter__title">
+        <span *ngIf="selectedGenre">Películas de {{ selectedGenre.name }}</span>
+        <span *ngIf="!selectedGenre">Explorar por Género</span>
+      </h1>
+      <p *ngIf="totalResults > 0" class="genre-filter__count">
+        {{ totalResults }} película{{ totalResults !== 1 ? 's' : '' }} encontrada{{ totalResults !== 1 ? 's' : '' }}
+      </p>
+    </header>
+
+    <!-- Genre Chips -->
+    <nav class="genre-filter__chips" aria-label="Géneros">
+      <button
+        *ngFor="let genre of genres"
+        class="btn chip"
+        [class.chip--active]="genre.id === selectedGenre?.id"
+        (click)="onGenreSelect(genre)"
+        type="button"
+      >
+        {{ genre.name }}
+      </button>
+    </nav>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-container">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error" class="alert alert-warning" role="alert">
+      {{ error }}
+    </div>
+
+    <!-- Results -->
+    <div *ngIf="!loading && movies.length > 0" class="genre-filter__grid">
+      <app-movie-card
+        *ngFor="let movie of movies; let i = index"
+        [movie]="movie"
+        [isFavorite]="isFavorite(movie.id)"
+        [style.animation-delay]="(i * 50) + 'ms'"
+        (toggleFavorite)="onToggleFavorite($event)"
+      ></app-movie-card>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && !selectedGenre" class="genre-filter__empty">
+      <p>Selecciona un género para ver las películas.</p>
+    </div>
+
+    <!-- Pagination -->
+    <nav *ngIf="totalPages > 1" class="genre-filter__pagination" aria-label="Paginación">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link" (click)="goToPage(currentPage - 1)" type="button">
+            &laquo; Anterior
+          </button>
+        </li>
+        <li *ngFor="let page of pageNumbers" class="page-item" [class.active]="page === currentPage">
+          <button class="page-link" (click)="goToPage(page)" type="button">
+            {{ page }}
+          </button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button class="page-link" (click)="goToPage(currentPage + 1)" type="button">
+            Siguiente &raquo;
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</main>
